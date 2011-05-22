@@ -1,0 +1,7 @@
+# This file is only required by the git repo, you can remove this when using Frameless to create a php web application
+
+
+# Smarty symlink
+smarty
+# Smarty directories (smarty-3.0.7 etc)
+Smarty-*

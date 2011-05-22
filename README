@@ -1,0 +1,33 @@
+Motivation
+----------
+This is a _very_ basic MVC framework that I am writing to better
+understand the MVC architecture.  It is by no means meant to be a
+competition for established frameworks but mostly just a research
+project.
+I have never used another MVC framework before creating this, this might
+look very alien to someone who is used to working with those frameworks.
+
+Files
+-----
+/htdocs/
+    This is the whole framework and this is what should be installed in
+    your web directory.
+
+/htdocs/view/
+/htdocs/view/templates
+/htdocs/controller/
+/htdocs/model/
+    These files are example models, views and controllers and can
+    (should) be replaced by your own code.
+
+
+Installation
+------------
+For the most basic functionality you only need to copy the /htdocs/
+directory and create your own views/controllers/models.  Some features
+require additional libraries to be installed, these libraries are not
+covered by the same license as the framework. Please see the COPYING
+file for more information.
+
+  Smarty:
+     Download the latest smarty and place it in /htdocs/library/smarty/
