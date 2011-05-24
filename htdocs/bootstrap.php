@@ -19,13 +19,6 @@
  * \subsection smarty Smarty Template Engine
  * Download the latest smarty and place it in /htdocs/library/smarty/
  *
- * \section example_member Example: members list
- * \subsection controller ./htdocs/controller/members.php
- * \include members.php
- * \subsection view ./htdocs/view/membersview.php
- * \include membersview.php
- * \subsection model ./htdocs/view/membersmodel.php
- * \include membersmodel.php
  */
 
 
@@ -42,9 +35,8 @@
     {
         if(
               IncludeProxy('./controller/' . strtolower($classname) . '.php')   != 1 &&
-              IncludeProxy('./model/' . strtolower($classname) . '.php')        != 1 &&
-              IncludeProxy('./view/' . strtolower($classname) . '.php')         != 1 &&
-              IncludeProxy('./library/' . strtolower($classname) . '.php')      != 1
+              IncludeProxy('./library/' . strtolower($classname) . '.php')      != 1 &&
+              IncludeProxy('./model/' . strtolower($classname) . '.php')        != 1
           );
     }
     

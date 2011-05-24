@@ -1,6 +1,6 @@
 <?php
 
-class Error404 extends Error404View
+class Error404 extends
 {
     function Handle404()
     {

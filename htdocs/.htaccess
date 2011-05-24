@@ -3,6 +3,7 @@ RewriteEngine on
 # Stop rewriting when the file or director exists
 # Entirely optional, comment it out if you wish
 RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule . - [L]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule . - [L]
 
