@@ -1,7 +1,8 @@
 <?php
     /**
      * BaseController provides the most basic functionality that every almost every controller needs.
-     * It provides a members to access the post, get, config and session variables
+     * It provides a members to access the post, get, config and session variables and makes sure these
+     * variables are not affected by magic_quotes_gpc, magic_quotes_sybase and magic_quotes_runtime
      */
     abstract class BaseController implements ControllerInterface
     {
@@ -36,10 +37,31 @@
         public function __construct(&$config, $session = true)
         {
             $this->config   = $config;
+            
+            $this->ScrubGlobals();
+
             $this->get      = new Vector($_GET, true);
             $this->post     = new Vector($_POST, true);
         }
 
+        // Clean all global data of magic_quotes litter
+        private function ScrubGlobals()
+        {
+            if(get_magic_quotes_gpc() || ini_get('magic_quotes_sybase'))
+            {
+                foreach($_POST as &$value)
+                    $value = stripslashes($value);
+                
+                foreach($_GET as &$value)
+                    $value = stripslashes($value);
+                
+                foreach($_COOKIE as &$value)
+                    $value = stripslashes($value);
+            }
+            ini_set('magic_quotes_runtime', 0);
+        }
+        
+        // Initiate a session, possibly named
         private function SessionInit($session)
         {
             if($session == false)
