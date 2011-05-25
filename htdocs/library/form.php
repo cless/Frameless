@@ -8,6 +8,83 @@
         private $post;
         private $errors;
 
+
+        /**
+         * All characters are contained in this set, this set can NOT be combined with other sets
+         */
+        const CHARSET_ANY           = 0x00;
+        
+        /**
+         * Lower case characters a-z are contained in this set
+         */
+        const CHARSET_ALPHA         = 0x01;
+        
+        /**
+         * Upper case characters A-Z are contained in this set
+         */
+        const CHARSET_BIGALPHA      = 0x02;
+        
+        /**
+         * All characters are allowed
+         */
+        const CHARSET_NUMBERS       = 0x04;
+
+        /**
+         * Space (' ') is contained in this set
+         */
+        const CHARSET_SPACE         = 0x08;
+
+        /**
+         * The following punctuation characters are contained in this set: . , ? ! : ;
+         */
+        const CHARSET_PUNCTUATION   = 0x10;
+        
+        /**
+         * This helper function creates a regular expression to be used as verification
+         * argument for Form::AddField. You can create your own regexes just fine, this function
+         * is merely there to make it easier.
+         *
+         * \param charset Any of the charset variables can be combined with bitwise or except
+         *                CHARSET_ANY (e.g. Form::CHARSET_ALPHA | Form::CHARSET_SPACE
+         * \param maxlength Maximum length of the field, if this is set to 0 then there is no
+         *                  limitation. Must be larger or equal to minlength.
+         * \param minlength Minimum length of the field, if this is set to 0 then there is no
+         *                  limitation. Must be smaller or equal to maxlength.
+         */
+        static function CreateVerification($charset, $maxlength = 0, $minlength = 0)
+        {
+            if ($charset === self::CHARSET_ANY)
+                $regexSet = '.';
+            else
+            {
+                $regexSet = '[';
+                
+                if ($charset & self::CHARSET_ALPHA)
+                    $regexSet .= 'a-z';
+                if ($charset & self::CHARSET_BIGALPHA)
+                    $regexSet .= 'A-Z';
+                if ($charset & self::CHARSET_NUMBERS)
+                    $regexSet .= '0-9';
+                if ($charset & self::CHARSET_SPACE)
+                    $regexSet .= ' ';
+                if ($charset & self::CHARSET_PUNCTUATION)
+                    $regexSet .= '.,!?:;';
+
+                $regexSet .= ']';
+            }
+            
+            if($maxlength == 0 && $minlength == 0)
+                $regexLength = '*';
+            elseif($maxlength == 0 && $minlength == 1)
+                $regexLength = '+';
+            elseif($maxlength == 0 && $minlength > 0)
+                $regexLength = '{' . $minlength . ',}';
+            else
+                $regexLength = '{' . $minlength . ',' . $maxlength .'}';
+
+            return '/^' . $regexSet . $regexLength . '$/';
+        }
+
         public function __construct()
         {
             $this->fields = array();
