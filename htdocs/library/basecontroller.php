@@ -3,7 +3,7 @@
      * BaseController provides the most basic functionality that every almost every controller needs.
      * It provides a members to access the post, get, config and session variables
      */
-    abstract class BaseController
+    abstract class BaseController implements ControllerInterface
     {
         /**
          * read only Vector that allows access the configuration in /data/config.ini
@@ -50,10 +50,5 @@
 
             session_start();
         }
-        
-        /**
-         * Children need to implement this function and make it return a string with the name of the default action
-         */
-        abstract public function DefaultAction();
     }
 ?>
