@@ -4,7 +4,7 @@
     </head>
     <body>
         {if isset($member)}
-        <a href="/members/all/">Back to memberlist</a>
+        <a href="/members/list/">Back to memberlist</a>
         <table>
             <tr>
                 <th>Name</th>

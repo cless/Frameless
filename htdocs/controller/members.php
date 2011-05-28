@@ -13,15 +13,20 @@
         public function __construct(&$config)
         {
             parent::__construct($config);
-
+            
             $this->view = new SmartyView();
             $this->view->SetTemplate('members.tpl');
-        }
-        
-        // Each controller should export a function that returns the default action as a string
-        public function DefaultAction()
-        {
-            return 'all';
+
+            // Every controller needs to set what actions it handles in its constructior
+            // (or if you dont use BaseController you have to implement your own 
+            //  ActionToFunction public member funtion. Every controller should have one action named 'default'
+            //
+            // Note that functions named here MUST be public
+            //                     'actionname' => 'function name'
+            $this->actions = array('list'       => 'all',
+                                   'default'    => 'all',
+                                   'user'       => 'user');
+
         }
         
         // The actions are just functions with the same name, if the browser calls for
