@@ -82,7 +82,7 @@
             else
                 $regexLength = '{' . $minlength . ',' . $maxlength .'}';
 
-            return '/^' . $regexSet . $regexLength . '$/';
+            return '/^' . $regexSet . $regexLength . '$/s';
         }
 
         public function __construct()
