@@ -16,6 +16,8 @@
         {
            if($this->exception->GetCode() == ErrorCodes::E_404)
                 $this->Handle404();
+            elseif($this->exception->GetCode() == ErrorCodes::E_CHAINED)
+                $this->HandleChained();
             else
                 $this->HandleUnknown();
         }
@@ -24,6 +26,11 @@
         {
             header($_SERVER["SERVER_PROTOCOL"]." 404 Not Found");
             echo '404 page not found';
+        }
+        
+        private function HandleChained()
+        {
+            echo $this->exception->getPrevious()->GetMessage() . '<br />';
         }
 
         private function HandleUnknown()

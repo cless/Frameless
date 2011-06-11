@@ -91,9 +91,15 @@
     {
         main();
     }
-    catch (Exception $e)
+    catch (FramelessException $e)
     {
         $error = new Error($e);
+        $error->Handle();
+    }
+    catch (Exception $e)
+    {
+        $chain = new FramelessException('Unknown Exception', ErrorCodes::E_CHAINED, $e); 
+        $error = new Error($chain);
         $error->Handle();
     }
 ?>
