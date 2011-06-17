@@ -10,9 +10,9 @@
 
         // Each controller should have a constructor that takes a Vector as argument. In this
         // vector you will find the contents of data/config.ini
-        public function __construct(&$config)
+        public function __construct(&$config, &$args)
         {
-            parent::__construct($config);
+            parent::__construct($config, $args);
             
             $this->view = new SmartyView();
             $this->view->SetTemplate('members.tpl');
@@ -46,7 +46,7 @@
             $get = new Vector($_GET);
             $members = new MembersModel();
 
-            $this->view->SetVar('member', $members->GetUser($get->AsString('args')));
+            $this->view->SetVar('member', $members->GetUser($this->args->AsString(2)));
             $this->view->Draw();
         }
     }

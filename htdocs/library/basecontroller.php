@@ -35,18 +35,28 @@
         protected $action;
 
         /**
+         * Vector with all 'file variables' passed to the framework. The contents of this vector is all
+         *                 the filenames the client is requesting from the server split on the '/' character.
+         *                 for example if the client visits http://www.example.org/controller/action/some/data
+         *                 then bootargs->AsString(0) would be "controller" and bootargs->AsString(3) would be
+         *                 "data" and so on.
+         */
+        protected $args;
+
+        /**
          * Initializes the controller.
          * \param config  a reference to an IniFile object, the object is passed into the controllers 
-         *                by the bootstrap
+         *                by the bootstrap and derivative classes should pass it on to the base controller
+         * \param bootargs a reference to a Vector object, see BaseController::bootargs for more info
          * \param session When set to false the BaseController will not create a session and the
          *                BaseController::session vector will NOT be accessible.
          *                To create a named session pass a string with the name to this parameter.
          *                pass true (default) to start an unnamed session.
          */
-        public function __construct(&$config, $session = true)
+        public function __construct(&$config, &$args, $session = true)
         {
-            $this->config   = $config;
-            
+            $this->config   =& $config;
+            $this->args     =& $args; 
             $this->ScrubGlobals();
 
             $this->get      = new Vector($_GET, true);

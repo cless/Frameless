@@ -5,9 +5,9 @@
     {
         private $view;
 
-        public function __construct(&$config)
+        public function __construct(&$config, &$args)
         {
-            parent::__construct($config);
+            parent::__construct($config, $args);
 
             $this->view = new SmartyView();
             $this->view->SetTemplate('formexample.tpl');
