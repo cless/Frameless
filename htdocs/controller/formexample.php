@@ -11,8 +11,7 @@
 
             $this->view = new SmartyView();
             $this->view->SetTemplate('formexample.tpl');
-            $this->actions = array('default'    => 'test',
-                                   'test'       => 'test');
+            $this->actions = array('default'    => 'test');
         }
         
 

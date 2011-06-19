@@ -31,8 +31,11 @@
          * http://www.example.com/controller/action/
          * the bootstrap then calls the function that corresponds to $actions['action']
          * derived classes should set this member in the constructor
+         * If no action is not given in the url then $actions['default'] will be used
+         * If the array has ONLY a 'default' member and no other members at all then the action
+         * passed in the URL will be ignored and repurposed as a normal argument (see BaseController::args)
          */
-        protected $action;
+        protected $actions;
 
         /**
          * Vector with all 'file variables' passed to the framework. The contents of this vector is all
@@ -104,7 +107,9 @@
          */
         public function ActionToFunction($action)
         {
-            if(isset($this->actions[$action]))
+            if(count($this->actions) == 1 && isset($this->actions['default']))
+                return $this->actions['default'];
+            else if(isset($this->actions[$action]))
                 return $this->actions[$action];
             else
                 return false;
