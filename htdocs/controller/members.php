@@ -35,7 +35,16 @@
         {
             // See models/membersmodel.php for more info on models
             $members = new MembersModel();
-            $this->view->SetVar('list', $members->GetAll());
+            
+            // Configure pagination at 3 items per page
+            $pagination = new Pagination($members->Count(), 3, $this->args->AsInt(2), "/members/list/{page}/");
+            
+            // Get the range of items for the current page
+            $limits = $pagination->GetLimits();
+
+            // Assign the pagination and members variables to the view and render it
+            $this->view->SetVar('pagination', $pagination->GetList());
+            $this->view->SetVar('list', $members->GetRange($limits[0], $limits[1]));
             $this->view->Draw();
         }
 

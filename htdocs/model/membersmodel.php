@@ -11,9 +11,13 @@
         function __construct()
         {
             $this->members = array (
-                                        array('name' => 'clueless', 'site' => 'https://thunked.org', 'lang' => 'C'),
-                                        array('name' => 'drusepth', 'site' => 'http://www.drusepth.net', 'lang' => 'ruby'),
-                                        array('name' => 'MatteWan', 'site' => 'http://www.osst.co.uk', 'lang' => 'php'),
+                                        array('name' => 'clueless', 'site' => 'https://thunked.org',     'lang' => 'C'),
+                                        array('name' => 'drusepth', 'site' => 'http://www.drusepth.net', 'lang' => 'Ruby'),
+                                        array('name' => 'MatteWan', 'site' => 'http://www.osst.co.uk',   'lang' => 'Php'),
+                                        array('name' => 'skier_',   'site' => 'http://skier.su',         'lang' => 'C'),
+                                        array('name' => 'izua',     'site' => 'http://izua.ro',          'lang' => 'C'),
+                                        array('name' => 'rundata',  'site' => 'http://illegalroot.net',  'lang' => 'Python'),
+                                        array('name' => 'zref',     'site' => 'http://zeroreference.com','lang' => 'Ruby'),
                                    );
         }
 
@@ -21,6 +25,12 @@
         public function GetAll()
         {
             return $this->members; 
+        }
+
+        // Return a few members in the list
+        public function GetRange($start, $len)
+        {
+            return array_slice($this->members, $start, $len);
         }
 
         // Get total # of members
