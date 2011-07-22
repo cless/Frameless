@@ -55,6 +55,11 @@
         const VTYPE_TOKEN       = 7;
 
         /**
+         * The variable is verified using CryptHash::Verify. Verification data is the expected password hash.
+         */
+        const VTYPE_CRYPTHASH   = 8;
+
+        /**
          * All characters are contained in this set, this set can NOT be combined with other sets
          */
         const CHARSET_ANY           = 0x00;
@@ -183,7 +188,11 @@
             // Todo: stricter verification of vdata
             if($vtype == Form::VTYPE_ARRAY && !is_array($vdata))
                 throw new FramelessException(array('Invalid Type', "Form field $name should have type array"), ErrorCodes::E_RUNTIME);
-            elseif(($vtype == Form::VTYPE_REGEX || $vtype == Form::VTYPE_EQUAL || $vtype == Form::VTYPE_FUNCTION) && !is_string($vdata))
+            elseif(($vtype == Form::VTYPE_REGEX ||
+                    $vtype == Form::VTYPE_EQUAL ||
+                    $vtype == Form::VTYPE_FUNCTION || 
+                    $vtype == Form::VTYPE_CRYPTHASH) &&
+                    !is_string($vdata))
                 throw new FramelessException(array('Invalid Type', "Form field $name should have type string"), ErrorCodes::E_RUNTIME);
 
             $this->fields[$name] = array('vtype' => $vtype,
@@ -277,6 +286,10 @@
                     return false;
             }
 
+            // CRYPTHASH
+            if($field['vtype'] == Form::VTYPE_CRYPTHASH)
+               return CryptHash::Verify($this->post->AsDefault($name), $field['vdata']);
+            
             // Someone was a real fag if we get here
             return false;
         }
