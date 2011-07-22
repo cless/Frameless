@@ -192,11 +192,11 @@
         }
         
         /**
-         * Sets the token name for this form, the name has to be set or Form::CreateToken is called
+         * Sets the token name for this form, the name has to be set before Form::CreateToken is called
          * If any form field is described with Form::VTYPE_TOKEN then this function must also be called
          * before Form::Verify or Form::VerifyField
          *
-         * \param name Name of the token (used as session variable)
+         * \param name Name of the token (This name is used as the name of a session variable ($_SESSION[$name]))
          */
         public function TokenName($name)
         {
@@ -268,6 +268,9 @@
                     return false;
 
                 $tokendata = explode(':', $_SESSION[$this->tokenname]);
+                if($this->post->AsDefault($name) != $tokendata[0])
+                    return false;
+
                 if((time() - $tokendata[3]) < $tokendata[1])
                     return true;
                 else
