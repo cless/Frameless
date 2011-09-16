@@ -3,10 +3,12 @@
         <title>MVC test!</title>
     </head>
     <body>
+        {if isset($pagination)}
         {foreach $pagination as $item}
             {if not $item.active}<a href="{$item.link}">{/if}{$item.page}{if not $item.active}</a>{/if}
         {/foreach}
         <br />
+        {/if}
         {if isset($member)}
         <a href="/members/list/">Back to memberlist</a>
         <table>

@@ -8,8 +8,9 @@
     {
         private $view;
 
-        // Each controller should have a constructor that takes a Vector as argument. In this
-        // vector you will find the contents of data/config.ini
+        // Each controller should have a constructor that takes two references to arrays as arguments.
+        // The first is an array with all contents from data/config.ini. The second is an array representing
+        // the url split by '/' (for example /members/user/john/)
         public function __construct(&$config, &$args)
         {
             parent::__construct($config, $args);
@@ -37,7 +38,10 @@
             $members = new MembersModel();
             
             // Configure pagination at 3 items per page
-            $pagination = new Pagination($members->Count(), 3, $this->args->AsInt(2), "/members/list/{page}/");
+            if (isset($this->args[2]))
+                $pagination = new Pagination($members->Count(), 3, (int)$this->args[2], "/members/list/{page}/");
+            else
+                $pagination = new Pagination($members->Count(), 3, 1, "/members/list/{page}/");
             
             // Get the range of items for the current page
             $limits = $pagination->GetLimits();
@@ -51,11 +55,9 @@
         // http://example.com/members/all/
         public function User()
         {
-            // Create a vector from the $_GET string for sexy access
-            $get = new Vector($_GET);
             $members = new MembersModel();
 
-            $this->view->SetVar('member', $members->GetUser($this->args->AsString(2)));
+            $this->view->SetVar('member', $members->GetUser($this->args[2]));
             $this->view->Draw();
         }
     }
