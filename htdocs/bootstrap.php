@@ -37,9 +37,10 @@
     function BootstrapAutoload($classname)
     {
         if(
-              IncludeProxy('./controller/' . strtolower($classname) . '.php')   != 1 &&
-              IncludeProxy('./library/' . strtolower($classname) . '.php')      != 1 &&
-              IncludeProxy('./model/' . strtolower($classname) . '.php')        != 1
+              IncludeProxy('./controller/' . strtolower($classname) . '.php')               != 1 &&
+              IncludeProxy('./controller/components/' . strtolower($classname) . '.php')    != 1 &&
+              IncludeProxy('./library/' . strtolower($classname) . '.php')                  != 1 &&
+              IncludeProxy('./model/' . strtolower($classname) . '.php')                    != 1
           );
     }
     
