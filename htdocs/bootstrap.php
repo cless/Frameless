@@ -52,6 +52,10 @@
     
     function &InitBootArgs(&$config)
     {
+        // Remove the baseargs from the url if needed
+        if(isset($config['bootstrap']['baseargs']) && isset($_GET['bootargs']))
+            $_GET['bootargs'] = substr($_GET['bootargs'], strlen($config['bootstrap']['baseargs']));
+
         // Read the arguments passed
         if(isset($_GET['bootargs']))
             $bootargs = explode('/', $_GET['bootargs']);
