@@ -40,7 +40,8 @@
               IncludeProxy('./controller/' . strtolower($classname) . '.php')               != 1 &&
               IncludeProxy('./controller/components/' . strtolower($classname) . '.php')    != 1 &&
               IncludeProxy('./library/' . strtolower($classname) . '.php')                  != 1 &&
-              IncludeProxy('./model/' . strtolower($classname) . '.php')                    != 1
+              IncludeProxy('./model/' . strtolower($classname) . '.php')                    != 1 &&
+              IncludeProxy('./library/exceptions/' . strtolower($classname) . '.php')                    != 1
           );
     }
     
@@ -94,7 +95,7 @@
 
         // Check if our actual is a valid controller, die if it isn't
         if(!IsController($controller))
-            throw new FramelessException('', ErrorCodes::E_404);
+            throw new NotFoundException();
         $page = new $controller($config, $args);
         
         // First verify if we need a default action
@@ -108,7 +109,7 @@
         if($action == false)
         {
             unset($page);
-            throw new FramelessException('', ErrorCodes::E_404);
+            throw new NotFoundException();
         }
         
         $page->$action();
@@ -126,8 +127,7 @@
     }
     catch (Exception $e)
     {
-        $chain = new FramelessException('Unknown Exception', ErrorCodes::E_CHAINED, $e); 
-        $error = new Error($chain);
+        $error = new Error($e);
         $error->Handle();
     }
 ?>

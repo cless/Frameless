@@ -7,17 +7,17 @@
     {
         private $exception;
 
-        public function __construct(FramelessException $e)
+        public function __construct(Exception $e)
         {
             $this->exception =& $e;
         }
 
         public function Handle()
         {
-           if($this->exception->GetCode() == ErrorCodes::E_404)
+            if($this->exception instanceof NotFoundException)
                 $this->Handle404();
-            elseif($this->exception->GetCode() == ErrorCodes::E_CHAINED)
-                $this->HandleChained();
+            elseif($this->exception instanceof FramelessException)
+                $this->HandleFrameless();
             else
                 $this->HandleUnknown();
         }
@@ -28,12 +28,12 @@
             echo '404 page not found';
         }
         
-        private function HandleChained()
+        private function HandleUnknown()
         {
-            echo $this->exception->getPrevious()->GetMessage() . '<br />';
+            echo 'An unknown exception occured.<br />';
         }
 
-        private function HandleUnknown()
+        private function HandleFrameless()
         {
             $msgs = $this->exception->GetAllMessages();
             foreach($msgs as $m)
