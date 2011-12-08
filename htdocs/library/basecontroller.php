@@ -95,8 +95,29 @@
                 ini_set('session.entropy_file', '/dev/urandom');
                 ini_set('session.entropy_length', 16);
             }
-
+            
             session_start();
+             
+            if(!isset($_SESSION['session_security_ip']))
+            {
+                $_SESSION['session_security_ip']   = IPAddress::ToBinary($_SERVER['REMOTE_ADDR']);
+                $_SESSION['session_security_mask'] = IPAddress::CreateMask(0);
+            }
+            else 
+                $this->VerifySessionSecurity();
+        }
+
+        private function VerifySessionSecurity()
+        {
+            $ip = IPAddress::ToBinary($_SERVER['REMOTE_ADDR']) & $_SESSION['session_security_mask'];
+            if(($_SESSION['session_security_ip'] & $_SESSION['session_security_mask']) != $ip)
+            {
+                session_destroy();
+                session_start();
+                session_regenerate_id(true);
+                $_SESSION['session_security_ip']   = IPAddress::ToBinary($_SERVER['REMOTE_ADDR']);
+                $_SESSION['session_security_mask'] = IPAddress::CreateMask(0);
+            }
         }
 
         /**
