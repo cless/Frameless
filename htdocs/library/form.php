@@ -294,7 +294,7 @@
 
         /**
          * Verify all fields known to the form and set the error values (if any). You can call
-         * Form::GetErrors after this function te get the actual error values.
+         * Form::GetErrors after this function to get the actual error values.
          * 
          * \param $functions if this parameter is set to false it is ignored. Otherwise it should be
          *                   the name of a function, or an array of function names. Function names

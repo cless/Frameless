@@ -3,7 +3,7 @@
  *
  * \section intro_sec Introduction
  *
- * Frameless is a very php framework to develop applications using the Model-View-Controler
+ * Frameless is a very minimalistic php framework to develop applications using the Model-View-Controler
  * architecture.  It is not meant to compete with other large and established frameworks.
  * Instead it is more of a research project for the author to become familiar with MVC, OO-PHP,
  * git and doxygen.  That being said, it is released in the hope that someone will find a use for
