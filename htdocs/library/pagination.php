@@ -94,7 +94,7 @@
             if($pagenum <= 0)
                 return false;
             
-            if((($pagenum - 1) * $this->perpage) <= $this->total)
+            if((($pagenum - 1) * $this->perpage) < $this->total)
                 return true;
             else
                 return false;
