@@ -40,6 +40,15 @@
         {
             $this->smarty->Assign($name, $value);
         }
+ 
+        /**
+        * Clear the assignment of a previously assigned variable by SetVar
+        * \param name Variable name
+        */
+        public function UnsetVar($name)
+        {
+        	$this->smarty->clearAssign($name);
+        }       
         
         /**
          * Renders the output based on the template and assigned variables
