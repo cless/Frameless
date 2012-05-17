@@ -47,7 +47,7 @@
         */
         public function UnsetVar($name)
         {
-        	$this->smarty->clearAssign($name);
+            $this->smarty->clearAssign($name);
         }       
         
         /**
